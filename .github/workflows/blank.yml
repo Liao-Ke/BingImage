@@ -30,3 +30,16 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python index.py
       - working-directory: ./script
+      - name: Commit files
+        run: |
+           git config --local user.email "c1824503917@outlook.com"
+           git config --local user.name "Liao-Ke"
+           git pull
+           git add script/*
+           git add ../image/*
+           git commit -m "update"
+      - name: Push changes
+        uses:  ad-m/github-push-action@master
+        with:
+           github_token: ${{ secrets.MY_GIT_TOKEN }}
+           branch: main
