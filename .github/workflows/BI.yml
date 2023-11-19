@@ -19,9 +19,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ../scripts
+    # defaults:
+    #   run:
+    #     working-directory: ./scripts
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +29,9 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip' # caching pip dependencies
-      - run: pip install -r requirements.txt
+      # - run: pip install -r requirements.txt
+      - name: test
+        run: ls
       - name: start
         run: python index.py
       - name: Commit files
