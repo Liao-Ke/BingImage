@@ -4,10 +4,11 @@ name: Get BingImage
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-   schedule:
-    # 定时执行，Runs at 08:00 UTC every day
-      - cron:  '0 08 * * *'
+  # # Triggers the workflow on push or pull request events but only for the "master" branch
+  #  schedule:
+  #   # 定时执行，Runs at 08:00 UTC every day
+  #     - cron:  '0 08 * * *'
+    workflow_dispatch
 
   # Allows you to run this workflow manually from the Actions tab
  
