@@ -3,12 +3,12 @@
 name: Get BingImage
 
 # Controls when the workflow will run
-on:
+on: workflow_dispatch
   # # Triggers the workflow on push or pull request events but only for the "master" branch
   #  schedule:
   #   # 定时执行，Runs at 08:00 UTC every day
   #     - cron:  '0 08 * * *'
-    workflow_dispatch:
+    
 
   # Allows you to run this workflow manually from the Actions tab
  
@@ -19,7 +19,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-  
+    defaults:
+      run:
+        working-directory: ./scripts
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v4
@@ -28,8 +30,8 @@ jobs:
           python-version: '3.11'
           cache: 'pip' # caching pip dependencies
       - run: pip install -r requirements.txt
-      - run: python index.py
-      - working-directory: ./script
+      - name: start
+        run: python index.py
       - name: Commit files
         run: |
            git config --local user.email "c1824503917@outlook.com"
