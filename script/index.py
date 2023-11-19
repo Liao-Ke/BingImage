@@ -40,7 +40,7 @@ def set_error(msg):
 
 
 if __name__ == "__main__":
-    path = "./image/" + time.strftime("%Y%m%d", time.localtime())
+    path = "../image/" + time.strftime("%Y%m%d", time.localtime())
     image_info = get_image_info()
     image_path = path + "/" + image_info[0]
     if os.path.exists(image_path):
