@@ -39,7 +39,7 @@ jobs:
            git config --local user.email "c1824503917@outlook.com"
            git config --local user.name "Liao-Ke"
            git pull
-           git add script/*
+           git add ./data.txt
            git add ../image/*
            git commit -m "update"
       - name: Push changes
