@@ -31,8 +31,8 @@ jobs:
           python-version: '3.11'
           cache: 'pip' # caching pip dependencies
       - run: pip install -r requirements.txt
-      - name: test
-        run: ls
+      # - name: test
+      #   run: ls
       - name: start
         run: python index.py
       - name: Commit files
@@ -40,9 +40,9 @@ jobs:
            git config --local user.email "c1824503917@outlook.com"
            git config --local user.name "Liao-Ke"
            git pull
-           git add ./data.txt
+           git add ./*
            git add ../image/*
-           git commit -m "update"
+           git commit -m "ADD IMG"
       - name: Push changes
         uses:  ad-m/github-push-action@master
         with:
