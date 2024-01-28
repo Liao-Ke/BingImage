@@ -68,3 +68,4 @@
 ../image/20240125/A real icebreaker.jpg   2024年01月25日 星期四  08:45:00   
 ../image/20240126/A haven for broken hearts.jpg   2024年01月26日 星期五  08:41:51   
 ../image/20240127/Not a night owl.jpg   2024年01月27日 星期六  08:41:11   
+../image/20240128/In winter's embrace.jpg   2024年01月28日 星期日  08:43:44   
