@@ -104,3 +104,4 @@
 ../image/20240301/Leaping through an extra day.jpg   2024年03月01日 星期五  08:45:16   
 ../image/20240302/And the march goes on.jpg   2024年03月02日 星期六  08:39:49   
 ../image/20240303/A slice of Sicily.jpg   2024年03月03日 星期日  08:43:21   
+../image/20240304/A dappled acrobat.jpg   2024年03月04日 星期一  08:41:38   
