@@ -117,3 +117,4 @@
 ../image/20240314/Bird's-eye view.jpg   2024年03月14日 星期四  08:40:49   
 ../image/20240315/A piece of pi.jpg   2024年03月15日 星期五  08:42:05   
 ../image/20240316/Where is this colorful desert.jpg   2024年03月16日 星期六  08:40:09   
+../image/20240317/Somewhat bamboo-zled.jpg   2024年03月17日 星期日  08:44:23   
