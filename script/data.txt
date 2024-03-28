@@ -128,3 +128,4 @@
 ../image/20240325/Where are these birds of a feather.jpg   2024年03月25日 星期一  08:43:06   
 ../image/20240326/Painting the town.jpg   2024年03月26日 星期二  08:41:46   
 ../image/20240327/A tidal tango.jpg   2024年03月27日 星期三  08:41:31   
+../image/20240328/Theater takes center stage.jpg   2024年03月28日 星期四  08:42:12   
