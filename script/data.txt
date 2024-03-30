@@ -130,3 +130,4 @@
 ../image/20240327/A tidal tango.jpg   2024年03月27日 星期三  08:41:31   
 ../image/20240328/Theater takes center stage.jpg   2024年03月28日 星期四  08:42:12   
 ../image/20240329/A path through the petals.jpg   2024年03月29日 星期五  08:41:45   
+../image/20240330/High tides and bright lights.jpg   2024年03月30日 星期六  08:40:30   
