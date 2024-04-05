@@ -136,3 +136,4 @@
 ../image/20240402/Don't believe your eyes.jpg   2024年04月02日 星期二  08:43:41   
 ../image/20240403/Beneath a ray of light.jpg   2024年04月03日 星期三  08:41:31   
 ../image/20240404/Wish hue were here.jpg   2024年04月04日 星期四  08:43:48   
+../image/20240405/Wanderers of the wetlands.jpg   2024年04月05日 星期五  08:42:44   
