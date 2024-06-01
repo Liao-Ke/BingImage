@@ -193,3 +193,4 @@
 ../image/20240529/On top of the world.jpg   2024年05月29日 星期三  08:49:48   
 ../image/20240530/'Otter' you looking at.jpg   2024年05月30日 星期四  08:45:49   
 ../image/20240531/'Everglad' to be here.jpg   2024年05月31日 星期五  08:48:38   
+../image/20240601/A green and pleasant land.jpg   2024年06月01日 星期六  08:49:18   
