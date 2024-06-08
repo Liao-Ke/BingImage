@@ -200,3 +200,4 @@
 ../image/20240605/Birds of a feather.jpg   2024年06月05日 星期三  08:46:02   
 ../image/20240606/World Environment Day.jpg   2024年06月06日 星期四  08:45:48   
 ../image/20240607/D-Day 80 years on.jpg   2024年06月07日 星期五  08:47:45   
+../image/20240608/Waves of hope.jpg   2024年06月08日 星期六  08:46:20   
