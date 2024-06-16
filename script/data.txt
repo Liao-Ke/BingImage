@@ -208,3 +208,4 @@
 ../image/20240613/A galactic gig.jpg   2024年06月13日 星期四  08:46:48   
 ../image/20240614/Tile tales.jpg   2024年06月14日 星期五  08:46:51   
 ../image/20240615/Long may it wave.jpg   2024年06月15日 星期六  08:46:48   
+../image/20240616/Where there's a will, there's a wave.jpg   2024年06月16日 星期日  08:52:12   
