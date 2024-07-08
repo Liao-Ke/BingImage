@@ -230,3 +230,4 @@
 ../image/20240705/Happy Independence Day!.jpg   2024年07月05日 星期五  08:47:42   
 ../image/20240706/A coastal encounter.jpg   2024年07月06日 星期六  08:46:40   
 ../image/20240707/Built to last.jpg   2024年07月07日 星期日  08:53:57   
+../image/20240708/Rice and shine.jpg   2024年07月08日 星期一  08:50:36   
