@@ -245,3 +245,4 @@
 ../image/20240720/Clever camouflage.jpg   2024年07月20日 星期六  08:48:25   
 ../image/20240721/To the moon and back.jpg   2024年07月21日 星期日  08:54:21   
 ../image/20240722/Smooth sailing.jpg   2024年07月22日 星期一  08:52:32   
+../image/20240723/Just hanging out.jpg   2024年07月23日 星期二  08:50:44   
