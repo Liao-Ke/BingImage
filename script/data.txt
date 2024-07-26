@@ -248,3 +248,4 @@
 ../image/20240723/Just hanging out.jpg   2024年07月23日 星期二  08:50:44   
 ../image/20240724/Echoes of history.jpg   2024年07月24日 星期三  08:51:38   
 ../image/20240725/Baa-utiful family.jpg   2024年07月25日 星期四  08:50:03   
+../image/20240726/Into the thick of it.jpg   2024年07月26日 星期五  08:49:40   
