@@ -254,3 +254,4 @@
 ../image/20240729/Chromatic coastline.jpg   2024年07月29日 星期一  08:52:33   
 ../image/20240730/Roar and explore.jpg   2024年07月30日 星期二  08:50:55   
 ../image/20240731/A medieval Manhattan.jpg   2024年07月31日 星期三  08:41:49   
+../image/20240801/'Hoodoo' we have here.jpg   2024年08月01日 星期四  08:56:10   
