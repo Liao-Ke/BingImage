@@ -258,3 +258,4 @@
 ../image/20240802/There's a boatload of bargains here.jpg   2024年08月02日 星期五  08:51:04   
 ../image/20240803/Somewhere under the rainbow.jpg   2024年08月03日 星期六  08:49:39   
 ../image/20240804/Towering over Wulong.jpg   2024年08月04日 星期日  08:55:36   
+../image/20240805/You've got a friend in me.jpg   2024年08月05日 星期一  08:53:28   
