@@ -288,3 +288,4 @@
 ../image/20240901/Dune days and desert haze.jpg   2024年09月01日 星期日  09:01:34   
 ../image/20240902/Row your boat gently down the Thames.jpg   2024年09月02日 星期一  08:54:24   
 ../image/20240903/Workers of the world, relax.jpg   2024年09月03日 星期二  08:52:45   
+../image/20240904/Unspoiled beauty for all.jpg   2024年09月04日 星期三  08:53:32   
