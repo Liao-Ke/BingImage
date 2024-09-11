@@ -295,3 +295,4 @@
 ../image/20240908/Humming along.jpg   2024年09月08日 星期日  08:58:01   
 ../image/20240909/A global chapter.jpg   2024年09月09日 星期一  08:55:38   
 ../image/20240910/Rainbow waves in 'big water'.jpg   2024年09月10日 星期二  08:54:12   
+../image/20240911/From skyline to water.jpg   2024年09月11日 星期三  08:54:05   
