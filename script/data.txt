@@ -319,3 +319,4 @@
 ../image/20241002/Dome sweet dome.jpg   2024年10月02日 星期三  08:57:03   
 ../image/20241003/Wind River's wild dance.jpg   2024年10月03日 星期四  08:56:56   
 ../image/20241004/Grand gesture of love.jpg   2024年10月04日 星期五  08:56:57   
+../image/20241005/A blue moon.jpg   2024年10月05日 星期六  08:57:12   
