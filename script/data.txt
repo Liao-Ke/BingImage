@@ -324,3 +324,4 @@
 ../image/20241007/The stone town of Tuscany.jpg   2024年10月07日 星期一  08:59:03   
 ../image/20241008/Celebrating architecture.jpg   2024年10月08日 星期二  08:56:56   
 ../image/20241009/Ocean's eight.jpg   2024年10月09日 星期三  08:57:07   
+../image/20241010/Colorado in full color.jpg   2024年10月10日 星期四  08:56:58   
