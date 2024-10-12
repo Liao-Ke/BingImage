@@ -326,3 +326,4 @@
 ../image/20241009/Ocean's eight.jpg   2024年10月09日 星期三  08:57:07   
 ../image/20241010/Colorado in full color.jpg   2024年10月10日 星期四  08:56:58   
 ../image/20241011/Rolling into fall.jpg   2024年10月11日 星期五  08:56:55   
+../image/20241012/Celebrate the Celts.jpg   2024年10月12日 星期六  08:55:54   
