@@ -334,3 +334,4 @@
 ../image/20241017/Unearthing the past.jpg   2024年10月17日 星期四  08:57:37   
 ../image/20241018/Astronauts, grab your skis!.jpg   2024年10月18日 星期五  08:57:35   
 ../image/20241019/Falling for Central Park.jpg   2024年10月19日 星期六  08:59:45   
+../image/20241020/Uncovering the past.jpg   2024年10月20日 星期日  09:02:34   
