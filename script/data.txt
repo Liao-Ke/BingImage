@@ -337,3 +337,4 @@
 ../image/20241020/Uncovering the past.jpg   2024年10月20日 星期日  09:02:34   
 ../image/20241021/Hanging in there.jpg   2024年10月21日 星期一  08:59:26   
 ../image/20241022/Standing tall in fall.jpg   2024年10月22日 星期二  08:58:54   
+../image/20241023/Fearsome façade.jpg   2024年10月23日 星期三  08:57:40   
