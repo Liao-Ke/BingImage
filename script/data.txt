@@ -341,3 +341,4 @@
 ../image/20241024/Stairway to nowhere.jpg   2024年10月24日 星期四  08:57:31   
 ../image/20241025/Ghosts of the gold rush.jpg   2024年10月25日 星期五  08:58:20   
 ../image/20241026/The heights of horror.jpg   2024年10月26日 星期六  08:56:43   
+../image/20241027/Into the woods.jpg   2024年10月27日 星期日  09:02:09   
