@@ -348,3 +348,4 @@
 ../image/20241031/A haunting history.jpg   2024年10月31日 星期四  08:59:06   
 ../image/20241101/Stone-cold stares on Halloween.jpg   2024年11月01日 星期五  09:02:48   
 ../image/20241102/Celebrating America's Native heritage.jpg   2024年11月02日 星期六  08:57:08   
+../image/20241103/From near extinction to national icon.jpg   2024年11月03日 星期日  09:02:30   
