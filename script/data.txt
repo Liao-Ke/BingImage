@@ -352,3 +352,4 @@
 ../image/20241104/Nurturing nature.jpg   2024年11月04日 星期一  09:00:20   
 ../image/20241105/Worth a thousand words.jpg   2024年11月05日 星期二  08:57:01   
 ../image/20241106/Out of many, one.jpg   2024年11月06日 星期三  08:57:26   
+../image/20241107/Shades of sunset.jpg   2024年11月07日 星期四  08:57:45   
