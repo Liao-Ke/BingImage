@@ -356,3 +356,4 @@
 ../image/20241108/Wolves in the wild.jpg   2024年11月08日 星期五  08:57:04   
 ../image/20241109/From the land of fire and ice.jpg   2024年11月09日 星期六  08:55:59   
 ../image/20241110/Cosmic views over earthly hues.jpg   2024年11月10日 星期日  09:01:16   
+../image/20241111/Flamboyance in flight.jpg   2024年11月11日 星期一  08:58:34   
