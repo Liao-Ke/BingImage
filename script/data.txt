@@ -360,3 +360,4 @@
 ../image/20241112/Heroes among us.jpg   2024年11月12日 星期二  08:57:01   
 ../image/20241113/Underneath the arches.jpg   2024年11月13日 星期三  08:58:09   
 ../image/20241114/The forests of the sea.jpg   2024年11月14日 星期四  08:58:04   
+../image/20241115/A cliffside story.jpg   2024年11月15日 星期五  09:01:44   
