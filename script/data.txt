@@ -362,3 +362,4 @@
 ../image/20241114/The forests of the sea.jpg   2024年11月14日 星期四  08:58:04   
 ../image/20241115/A cliffside story.jpg   2024年11月15日 星期五  09:01:44   
 ../image/20241116/Hope takes flight.jpg   2024年11月16日 星期六  09:00:16   
+../image/20241117/Mud, sea, and sky.jpg   2024年11月17日 星期日  09:05:04   
