@@ -363,3 +363,4 @@
 ../image/20241115/A cliffside story.jpg   2024年11月15日 星期五  09:01:44   
 ../image/20241116/Hope takes flight.jpg   2024年11月16日 星期六  09:00:16   
 ../image/20241117/Mud, sea, and sky.jpg   2024年11月17日 星期日  09:05:04   
+../image/20241118/The hart of the Highlands.jpg   2024年11月18日 星期一  09:02:52   
