@@ -368,3 +368,4 @@
 ../image/20241120/An arch that rocks.jpg   2024年11月20日 星期三  09:01:04   
 ../image/20241121/United for World Children’s Day.jpg   2024年11月21日 星期四  09:01:06   
 ../image/20241122/Sunrise on the savanna.jpg   2024年11月22日 星期五  09:01:52   
+../image/20241123/Castle on a crag.jpg   2024年11月23日 星期六  08:59:49   
