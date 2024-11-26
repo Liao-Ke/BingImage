@@ -371,3 +371,4 @@
 ../image/20241123/Castle on a crag.jpg   2024年11月23日 星期六  08:59:49   
 ../image/20241124/Nature's secret code.jpg   2024年11月24日 星期日  09:05:17   
 ../image/20241125/Tides and twilight.jpg   2024年11月25日 星期一  09:02:20   
+../image/20241126/Life in the wild.jpg   2024年11月26日 星期二  09:01:57   
