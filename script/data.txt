@@ -373,3 +373,4 @@
 ../image/20241125/Tides and twilight.jpg   2024年11月25日 星期一  09:02:20   
 ../image/20241126/Life in the wild.jpg   2024年11月26日 星期二  09:01:57   
 ../image/20241127/Beneath ancient olive trees.jpg   2024年11月27日 星期三  09:02:34   
+../image/20241128/The giant's resting place.jpg   2024年11月28日 星期四  09:02:29   
