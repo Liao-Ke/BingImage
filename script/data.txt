@@ -378,3 +378,4 @@
 ../image/20241130/An island of time and tide.jpg   2024年11月30日 星期六  09:00:59   
 ../image/20241201/Reflecting Scotland's heritage.jpg   2024年12月01日 星期日  09:12:27   
 ../image/20241202/Protecting the last great wilderness.jpg   2024年12月02日 星期一  09:04:39   
+../image/20241203/A wild stare.jpg   2024年12月03日 星期二  09:04:04   
