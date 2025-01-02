@@ -408,3 +408,4 @@
 ../image/20241230/On the sacred mountain.jpg   2024年12月30日 星期一  09:01:12   
 ../image/20241231/A park for all seasons.jpg   2024年12月31日 星期二  08:58:50   
 ../image/20250101/Midnight in Rio.jpg   2025年01月01日 星期三  09:04:24   
+../image/20250102/Have an ice New Year's Day.jpg   2025年01月02日 星期四  08:59:01   
