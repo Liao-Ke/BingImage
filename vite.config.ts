@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite'
 import viteCompression from 'vite-plugin-compression';
 export default defineConfig({
+  publicDir:"image",
   resolve: {
     alias: {
       '@node_modules': '../node_modules',
       '@script': '../script'
-
     }
   },
   plugins: [

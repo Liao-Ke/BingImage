@@ -2,23 +2,13 @@ import 'layui'
 // import '@node_modules/layui/dist/css/layui.css'
 import json from '@script/data.json'
 
-// const imgBE=document.getElementById("imgBE")
-// const fragment = document.createDocumentFragment();
-// json.forEach(element => {
-//     const img = new Image()
-//     img.src = element.image_path
-//     fragment.appendChild(img)
-// });
-// imgBE.appendChild(fragment)
+
 function* createImageGenerator(jsonArray) {
     for (const element of jsonArray) {
         const img = new Image();
-        // img.height=300
-        // img.src = element.image_path;
-        // img.setAttribute('lay-src', element.image_path);
+     
+        img.src =import.meta.env.VITE_IS_PROD?layui.url(element.image_path).pathname.slice(1, 3).join('/') :  element.image_path;
         
-        img.src = element.image_path;
-
         var filename = layui.url(element.image_path).pathname.at(-1);
         let [newFilename] = filename.split('.');
         img.alt = newFilename;
@@ -45,7 +35,6 @@ layui.use(['flow'],function(){
                 data += img.outerHTML;
             }
         }
-        console.log(data);
         
       next(data,page< (json.length/10)) ; // 此处假设总页数为 10
        },520)
