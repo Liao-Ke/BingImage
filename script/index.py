@@ -5,6 +5,7 @@
 @Version :   1.0
 @Author  :   Liao
 """
+import json
 import os
 import time
 
@@ -39,6 +40,17 @@ def set_error(msg):
         err.write(str(msg) + "    " + get_format_time() + "   \n")
 
 
+def append_to_json(file_path, new_item):
+    try:
+        with open(file_path, 'r', encoding='utf - 8') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        data = []
+    data.append(new_item)
+    with open(file_path, 'w', encoding='utf - 8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
+
+
 if __name__ == "__main__":
     path = "../image/" + time.strftime("%Y%m%d", time.localtime())
     image_info = get_image_info()
@@ -58,5 +70,8 @@ if __name__ == "__main__":
     except requests.exceptions.ConnectionError as e:
         set_error(f"下载图片异常：{e}")
         exit(1)
-    with open("./data.txt", "a") as f:
-        f.write(image_path + "   " + get_format_time() + "   \n")
+    item = {
+        "image_path": image_path,
+        "datetime": get_format_time()
+    }
+    append_to_json("data.json", item)

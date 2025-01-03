@@ -1,0 +1,26 @@
+{
+  "name": "bingimage",
+  "version": "1.0.0",
+  "description": "获取每日必应美图，保存在Github仓库",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@ssh.github.com:443/Liao-Ke/BingImage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^6.0.7",
+    "vite-plugin-compression": "^0.5.1"
+  },
+  "dependencies": {
+    "layui": "^2.9.21"
+  }
+}

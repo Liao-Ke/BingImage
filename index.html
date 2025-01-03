@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .waterfall {
+            column-count: 2;
+            column-gap: 10px;
+        }
+
+        .waterfall img {
+            width: 100%;
+            margin-bottom: 10px;
+            object-fit: cover;
+            display: block;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 针对移动端的媒体查询 */
+        @media (max-width: 600px) {
+            .waterfall {
+                column-count: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script type="module" src="/src/main.js"></script>
+    <div class="waterfall"></div>
+</body>
+
+</html>
