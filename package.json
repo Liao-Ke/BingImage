@@ -2,7 +2,6 @@
   "name": "bingimage",
   "version": "1.0.0",
   "description": "获取每日必应美图，保存在Github仓库",
-  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,10 +16,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.23",
+    "postcss": "^8.5.1",
     "vite": "^6.0.7",
     "vite-plugin-compression": "^0.5.1"
   },
   "dependencies": {
-    "layui": "^2.9.21"
+    "@tailwindcss/vite": "^4.0.0",
+    "tailwindcss": "^3"
   }
 }

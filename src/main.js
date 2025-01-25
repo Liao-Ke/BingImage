@@ -1,44 +1,60 @@
-import 'layui'
-// import '@node_modules/layui/dist/css/layui.css'
-import json from '@script/data.json'
+import './styles/app.css'
 
+// 假设 getCurrentDateFormatted 函数的实现如下
+function getCurrentDateFormatted(offset = 0) {
+    const date = new Date();
+    date.setDate(date.getDate() - offset);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}${month}${day}`;
+}
 
-function* createImageGenerator(jsonArray) {
-    for (const element of jsonArray) {
-        const img = new Image();
-     
-        img.src =import.meta.env.VITE_IS_PROD?layui.url(element.image_path).pathname.slice(1, 3).join('/') :  element.image_path;
-        
-        var filename = layui.url(element.image_path).pathname.at(-1);
-        let [newFilename] = filename.split('.');
-        img.alt = newFilename;
-        img.title = `${newFilename} ${element.datetime}`;
-        
-        yield img;
+// 封装设置背景图片和添加链接到标题的逻辑
+function setBackgroundAndTitle(json) {
+    // 构建背景图片的 URL
+    const bgurl = `https://cn.bing.com${json.default.images[0].urlbase}_UHD.jpg&qlt=100`;
+    // 设置页面背景图片
+    document.body.style.backgroundImage = `url(${bgurl})`;
+    // 设置页面标题
+    document.title = json.default.images[0].title;
+
+    // 获取 h1 元素
+    const h1Element = document.querySelector('h1');
+    // 创建一个 a 元素
+    const aElement = document.createElement('a');
+    // 设置 a 元素的 href 属性为图片的版权链接
+    aElement.href = json.default.images[0].copyrightlink;
+    // 设置 a 元素的文本为图片的标题
+    aElement.innerText = json.default.images[0].title;
+    // 将 a 元素添加到 h1 元素中
+    h1Element.appendChild(aElement);
+}
+
+// 尝试加载指定日期的数据
+async function tryLoadData(dateOffset = 0) {
+    const formattedDate = getCurrentDateFormatted(dateOffset);
+    try {
+        // 动态导入指定日期的数据文件
+        const json = await import(`../image/${formattedDate}/data.json`);
+        // 调用设置背景图片和标题的函数
+        setBackgroundAndTitle(json);
+        return true;
+    } catch (error) {
+        console.error(`Failed to load data for date ${formattedDate}:`, error);
+        return false;
     }
 }
-const imageGenerator = createImageGenerator(json);
-layui.use(['flow'],function(){
-    const flow = layui.flow;
-    // 流加载实例
-    flow.load({
-      elem: '.waterfall', // 流加载容器
-      isLazyimg: false, // 是否延迟加载图片
-      done: function(page, next){ // 执行下一页的回调
-        // 模拟数据插入
-       setTimeout(function(){
 
-        let data = '';
-        for (let i = 0; i < 10; i++) {
-            const img = imageGenerator.next().value;
-            if (img) {
-                data += img.outerHTML;
-            }
+// 主函数，尝试加载数据，最多尝试 5 次
+async function main() {
+    for (let i = 0; i < 5; i++) {
+        if (await tryLoadData(i)) {
+            return;
         }
-        
-      next(data,page< (json.length/10)) ; // 此处假设总页数为 10
-       },520)
-       
-      }
-    });
-  });
+    }
+    console.log('Failed to load data after multiple attempts.');
+}
+
+// 调用主函数
+main();

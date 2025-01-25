@@ -1,14 +1,15 @@
 import { defineConfig } from 'vite'
 import viteCompression from 'vite-plugin-compression';
+import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
-  publicDir:"image",
-  resolve: {
-    alias: {
-      '@node_modules': '../node_modules',
-      '@script': '../script'
-    }
-  },
+  // resolve: {
+  //   alias: {
+  //     '@node_modules': '../node_modules',
+  //     '@script': '../script'
+  //   }
+  // },
   plugins: [
+    tailwindcss(),
     viteCompression({
       verbose: true, 
       disable: false, 
