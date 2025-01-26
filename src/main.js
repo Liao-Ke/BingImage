@@ -23,6 +23,14 @@ function setBackgroundAndTitle(json) {
     const h1Element = document.querySelector('h1');
     // 创建一个 a 元素
     const aElement = document.createElement('a');
+    // 设置 a 元素的 class 属性为 link
+    aElement.classList.add('link');
+    // 设置 a 元素的 class 属性为 link-hover
+    aElement.classList.add('link-hover');
+    // 设置 a 元素的 class 属性为 btn btn-ghost text-xl
+    aElement.classList.add('btn', 'btn-ghost', 'text-xl');
+    // 设置 a 元素的 target 属性为 _blank
+    aElement.target = '_blank';
     // 设置 a 元素的 href 属性为图片的版权链接
     aElement.href = json.default.images[0].copyrightlink;
     // 设置 a 元素的文本为图片的标题
