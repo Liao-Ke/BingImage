@@ -1,29 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>必应美图</title>
-    <style>
-        html,
-        body {
-            height: 100vh;
-            width: 100vw;
-            background-color: #6b69d6;
-            background-size: cover;
-            background-position: center center;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>必应美图</title>
 </head>
 
 <body>
-    <script type="module" src="/src/main.js"></script>
-    <div class="glass rounded-badge ">
-        <div>
-            <div id="navbar" class="navbar bg-base-100"></div>
-        </div>
-    </div>
+  <div class="scroll-container">
+    <div class="item prev"><span class="text">上一张图片</span><img src="" alt=""></div>
+    <div class="item current"><span class="text">当前图片</span><img src="" alt=""></div>
+    <div class="item next"><span class="text">下一张图片</span><img src="" alt=""></div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
