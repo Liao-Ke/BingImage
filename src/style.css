@@ -16,11 +16,12 @@ html,
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 .scroll-container {
   overflow-y: hidden;
-  height: 100vh;
+  height: 100%;
   position: relative;
 }
 
@@ -41,12 +42,25 @@ body {
   position: absolute;
 }
 
-.scroll-container .text {
+.scroll-container .text,
+.scroll-container .footer {
   position: absolute;
   z-index: 7;
   color: #fff;
   font-size: 32px;
   font-weight: bold;
+  /* mix-blend-mode: difference; */
+}
+.scroll-container .footer {
+  font-size: unset;
+  color: #fddd;
+
+  bottom: 0;
+  text-decoration: none;
+}
+.scroll-container .footer:hover {
+  text-decoration: underline;
+  mix-blend-mode: difference;
 }
 .scroll-container .prev {
   top: 0;
@@ -72,6 +86,8 @@ body {
 }
 
 .scroll-down .item.next .text,
-.scroll-up .item.prev .text {
+.scroll-up .item.prev .text,
+.scroll-down .item.next .footer,
+.scroll-up .item.prev .footer {
   z-index: 9;
 }

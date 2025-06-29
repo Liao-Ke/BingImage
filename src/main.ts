@@ -25,7 +25,7 @@ function formatDateToYearMonthDay(dateString: string): Date {
 const minDate = formatDateToYearMonthDay(imgJson[0].datetime);
 const maxDate = formatDateToYearMonthDay(imgJson[imgJson.length - 1].datetime);
 
-const container = document.querySelector(".scroll-container");
+const container = document.querySelector(".scroll-container") as HTMLDivElement;
 
 let curDate = new Date();
 if (curDate > maxDate) {
@@ -81,14 +81,24 @@ async function createElement(
   // container!.appendChild(div);
   // return div;
   const img = document.querySelector(`${className} img`) as HTMLImageElement;
-  const imgTimeElement = document.querySelector(
+  const imgTextElement = document.querySelector(
     `${className} .text`
   ) as HTMLSpanElement;
+  const imgFooterElement = document.querySelector(
+    `${className} .footer`
+  ) as HTMLAnchorElement;
   const imgData = await import(
     `../image/${getDateFormatted(dateParam)}/data.json`
   );
   img!.src = `https://cn.bing.com${imgData.default.images[0].urlbase}_UHD.jpg&qlt=100`;
-  imgTimeElement!.textContent = imgData.default.images[0].title;
+  img.alt = imgData.default.images[0].title;
+  imgTextElement.textContent = imgData.default.images[0].title;
+  imgFooterElement.textContent =
+    imgData.default.images[0].copyright +
+    "——" +
+    imgData.default.images[0].enddate;
+  imgFooterElement.href = imgData.default.images[0].copyrightlink;
+  imgFooterElement.target = "_blank";
 }
 
 async function resetElements() {
@@ -117,6 +127,39 @@ window.addEventListener("wheel", (e) => {
     container?.querySelector(".next")?.classList.add("transitioning");
   }
 });
+
+// 触摸事件处理
+let touchStartY = 0;
+let touchEndY = 0;
+
+container.addEventListener(
+  "touchstart",
+  (e: TouchEvent) => {
+    touchStartY = e.changedTouches[0].screenY;
+  },
+  false
+);
+
+container.addEventListener(
+  "touchend",
+  (e: TouchEvent) => {
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+  },
+  false
+);
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+
+  if (touchEndY - touchStartY > swipeThreshold) {
+    container.className = "scroll-container scroll-up";
+    container.querySelector(".prev")?.classList.add("transitioning");
+  } else if (touchStartY - touchEndY > swipeThreshold) {
+    container.className = "scroll-container scroll-down";
+    container.querySelector(".next")?.classList.add("transitioning");
+  }
+}
 
 container!.addEventListener("transitionend", async () => {
   if (container!.className.includes("scroll-up")) {
