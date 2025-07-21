@@ -90,7 +90,8 @@ async function createElement(
   const imgData = await import(
     `../image/${getDateFormatted(dateParam)}/data.json`
   );
-  img!.src = `https://cn.bing.com${imgData.default.images[0].urlbase}_UHD.jpg&qlt=100`;
+  // img!.src = `https://cn.bing.com${imgData.default.images[0].urlbase}_UHD.jpg&qlt=100`;
+  img!.src = `https://cn.bing.com${imgData.default.images[0].url}`;
   img.alt = imgData.default.images[0].title;
   imgTextElement.textContent = imgData.default.images[0].title;
   imgFooterElement.textContent =
