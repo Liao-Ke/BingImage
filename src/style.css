@@ -486,21 +486,7 @@ body {
   opacity: 1;
 }
 
-/* 时间轴右端滚动提示（纯装饰，不拦截点击） */
-.timeline-hint {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  padding: 0 22px 0 48px;
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.5);
-  pointer-events: none;
-  background: linear-gradient(90deg, rgba(12, 12, 15, 0), rgba(12, 12, 15, 0.85) 60%);
-}
+
 
 /* 年份分隔标签：悬浮在每年第一张缩略图左侧；纯装饰，不拦截点击 */
 .year-tag {
@@ -610,10 +596,6 @@ body {
 
   .timeline {
     padding: 12px 14px 0;
-  }
-
-  .timeline-hint {
-    display: none;
   }
 }
 
