@@ -3,17 +3,70 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>必应美图</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="必应每日壁纸完整档案：从 2023 年至今，每一天的精选美图。" />
+  <meta name="theme-color" content="#0a0a0c" />
+  <title>必应美图 · 每日壁纸档案</title>
 </head>
 
 <body>
-  <div class="scroll-container">
-    <div class="item prev"><span lang="en" translate class="text">上一张图片</span><img src="" alt=""><a class="footer"></a>
-    </div>
-    <div class="item current"><span lang="en" translate class="text">当前图片</span><img src="" alt=""><a
-        class="footer"></a></div>
-    <div class="item next"><span lang="en" translate class="text">下一张图片</span><img src="" alt=""><a class="footer"></a>
+  <div id="app">
+    <!-- 顶部信息栏：站点名 / 当前日期 / 进度 -->
+    <header class="topbar">
+      <h1 class="brand">必应美图</h1>
+      <div class="topbar-meta">
+        <span id="date-display" aria-hidden="true">—</span>
+        <span id="time-display" aria-hidden="true"></span>
+        <span id="counter" aria-hidden="true">— / —</span>
+      </div>
+      <div class="topbar-actions">
+        <button id="btn-random" type="button">随机</button>
+        <button id="btn-latest" type="button">最新</button>
+        <button id="btn-prefetch" type="button" aria-pressed="false" aria-label="预载开关，当前关闭" title="开启后将在浏览器空闲时预载相邻壁纸，提升切换速度（约 5MB/张，流量敏感请保持关闭）">预载：关</button>
+      </div>
+    </header>
+
+    <!-- 主图舞台：双层交替渲染，切换时交叉淡入；aria-live 向读屏播报标题变化 -->
+    <main id="stage" aria-live="polite">
+      <section class="slide" id="slide-a" aria-hidden="true">
+        <img alt="" />
+        <div class="caption">
+          <h2 class="slide-title"></h2>
+          <p class="slide-copyright"></p>
+        </div>
+      </section>
+      <section class="slide" id="slide-b" aria-hidden="true">
+        <img alt="" />
+        <div class="caption">
+          <h2 class="slide-title"></h2>
+          <p class="slide-copyright"></p>
+        </div>
+      </section>
+
+      <!-- 左右切换箭头（桌面端显示） -->
+    <button class="nav-btn nav-prev" id="nav-prev" type="button" aria-label="上一张壁纸">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="nav-btn nav-next" id="nav-next" type="button" aria-label="下一张壁纸">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <!-- 首屏加载 / 出错占位 -->
+      <div class="stage-overlay" id="stage-overlay" role="status">
+        <div class="spinner" aria-hidden="true"></div>
+        <p id="overlay-text">正在加载壁纸档案…</p>
+        <button class="retry-btn" id="retry-btn" type="button" hidden>重试</button>
+      </div>
+    </main>
+
+    <!-- 底部缩略图时间轴：窗口化虚拟列表 -->
+    <footer class="timeline-wrap" id="timeline-wrap">
+      <div class="timeline" id="timeline" role="listbox" aria-label="壁纸时间轴，可左右滚动选择日期"></div>
+      <div class="timeline-hint" aria-hidden="true">← 滚动浏览全部日期 →</div>
+    </footer>
+    <!-- 首次访问操作提示（自动消失） -->
+    <div class="toast" id="toast" role="status">
+      滚轮 / 滑动 / 方向键切换壁纸 · 底部时间轴可拖动浏览全部日期
     </div>
   </div>
   <script type="module" src="/src/main.ts"></script>

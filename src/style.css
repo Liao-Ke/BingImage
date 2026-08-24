@@ -1,93 +1,640 @@
+/* ==========================================================================
+   必应美图档案主页样式
+   视觉：深色沉浸式，图片为主体，毛玻璃信息条；底部缩略图时间轴
+   注意：--thumb-w/h/gap 与 src/main.ts 中 THUMB_W/THUMB_H/THUMB_GAP 保持一致
+   ========================================================================== */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* 设计变量 */
+  --bg: #0a0a0c;
+  --fg: #f5f5f7;
+  --fg-dim: rgba(245, 245, 247, 0.62);
+  --accent: #4cc9f0;
+  --accent-soft: rgba(76, 201, 240, 0.3);
+  --thumb-w: 144px;
+  --thumb-h: 81px;
+  --thumb-gap: 8px;
+  --radius: 10px;
+  --timeline-h: 118px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #6b69d6;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+  color: var(--fg);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.scroll-container {
-  overflow-y: hidden;
-  height: 100%;
-  position: relative;
-}
-
-.scroll-container .item {
-  width: 100%;
   height: 100%;
   overflow: hidden;
-  display: flex; /* 或者使用display: grid */
-  justify-content: center;
-  align-items: center;
-}
-.scroll-container .item.transitioning {
-  transition: height 0.5s ease-in-out;
-}
-.scroll-container .prev,
-.scroll-container .next {
-  height: 0;
-  position: absolute;
+  /* 禁止页面级滚动/回弹，滚轮全部交给舞台与时间轴处理 */
+  overscroll-behavior: none;
 }
 
-.scroll-container .text,
-.scroll-container .footer {
-  position: absolute;
-  z-index: 7;
-  color: #fff;
-  font-size: 32px;
-  font-weight: bold;
-  /* mix-blend-mode: difference; */
+#app {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
-.scroll-container .footer {
-  font-size: unset;
-  color: #fddd;
 
-  bottom: 0;
-  text-decoration: none;
-}
-.scroll-container .footer:hover {
-  text-decoration: underline;
-  mix-blend-mode: difference;
-}
-.scroll-container .prev {
+/* ==================== 顶部信息栏 ==================== */
+
+.topbar {
+  position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: calc(14px + env(safe-area-inset-top)) 24px 20px;
+  /* 上缘渐隐，保证顶栏文字在亮色图片上可读 */
+  background: linear-gradient(rgba(10, 10, 12, 0.72), rgba(10, 10, 12, 0));
+  pointer-events: none;
 }
-.scroll-container .next {
-  bottom: 0;
+
+/* 顶栏操作按钮组 */
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
 }
-.scroll-container .item img {
+
+.topbar-actions button {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.topbar-actions button:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--accent);
+}
+
+.topbar-actions button:active {
+  transform: scale(0.95);
+}
+
+/* 预载开关开启态：实心 accent，一眼可辨 */
+.topbar-actions button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0a0c;
+  font-weight: 600;
+}
+
+.topbar-actions button.active:hover {
+  background: #5fd4f7;
+  border-color: #5fd4f7;
+}
+
+.topbar-actions button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.brand {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+.topbar-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.78);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+  font-variant-numeric: tabular-nums;
+}
+
+#time-display {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+/* ==================== 主图舞台（双层交替） ==================== */
+
+#stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  /* visibility 延迟切换，防止隐藏层闪烁 */
+  transition: opacity 0.5s var(--ease), visibility 0s 0.5s;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s var(--ease);
+}
+
+.slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.6);
+  display: block;
+  /* 切换时轻微由大到小，制造"拉近"感 */
+  animation: stage-in 1.4s var(--ease) both;
 }
-.scroll-down .item.next,
-.scroll-up .item.prev {
-  height: 100%;
+
+.slide img.img-error {
+  /* 本地与远程图均失败：深色底 + 缩小居中显示（alt 文字可见） */
+  object-fit: contain;
+  background: #141418;
+}
+
+@keyframes stage-in {
+  from {
+    transform: scale(1.03);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* 底部说明区：标题 + 版权链接，悬浮于渐变遮罩上 */
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 72px 32px calc(28px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(10, 10, 12, 0) 0%, rgba(10, 10, 12, 0.35) 45%, rgba(10, 10, 12, 0.82) 100%);
+  pointer-events: none;
+}
+
+.caption a {
+  pointer-events: auto;
+}
+
+.slide-title {
+  margin: 0 0 8px;
+  font-size: clamp(22px, 3.4vw, 42px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+}
+
+.slide-copyright {
+  margin: 0;
+  font-size: clamp(12px, 1.3vw, 15px);
+  color: rgba(255, 255, 255, 0.78);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+.slide-copyright a {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+}
+
+.slide-copyright a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+/* 版权行：链接 + 测验按钮 */
+.caption-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.quiz-btn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.quiz-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--accent);
+}
+
+.quiz-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ==================== 左右切换箭头（桌面端） ==================== */
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(12, 12, 15, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease, background 0.2s, border-color 0.2s;
+}
+
+/* 默认隐藏，hover 舞台时浮现；触屏设备不显示 */
+@media (hover: hover) {
+  #stage:hover .nav-btn {
+    opacity: 1;
+  }
+}
+
+.nav-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.nav-prev {
+  left: 18px;
+}
+
+.nav-next {
+  right: 18px;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--accent);
+}
+
+.nav-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.nav-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+@media (max-width: 720px) {
+  .nav-btn {
+    display: none;
+  }
+}
+
+/* ==================== 加载遮罩 / 错误占位 ==================== */
+
+.stage-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.stage-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.14);
+  border-top-color: var(--accent);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#overlay-text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--fg-dim);
+}
+
+/* 主图切换下载超时的加载指示（右下角小转圈） */
+#stage.loading::after {
+  content: "";
+  position: absolute;
+  right: 26px;
+  bottom: calc(var(--timeline-h) + 22px);
+  z-index: 12;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.25);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@media (max-width: 720px) {
+  #stage.loading::after {
+    right: 16px;
+    bottom: calc(var(--timeline-h) + 14px);
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.retry-btn {
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--fg);
+  font-size: 13px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s;
+}
+
+.retry-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.retry-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ==================== 底部缩略图时间轴 ==================== */
+
+.timeline-wrap {
+  position: relative;
   z-index: 10;
+  flex: none;
+  height: var(--timeline-h);
+  /* 毛玻璃浮层 */
+  background: rgba(12, 12, 15, 0.82);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-.scroll-down .item.next img,
-.scroll-up .item.prev img {
-  z-index: 8;
+.timeline {
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* 隐藏滚动条，保留滚动能力 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 14px 20px 0;
 }
 
-.scroll-down .item.next .text,
-.scroll-up .item.prev .text,
-.scroll-down .item.next .footer,
-.scroll-up .item.prev .footer {
-  z-index: 9;
+.timeline::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-inner {
+  position: relative;
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #1a1a20;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s var(--ease), border-color 0.2s;
+}
+
+/* 时间轴可拖拽提示（桌面鼠标悬停） */
+@media (hover: hover) {
+  .timeline {
+    cursor: grab;
+  }
+
+  .timeline:active {
+    cursor: grabbing;
+  }
+}
+
+.thumb:hover {
+  transform: translateY(-2px);
+}
+
+.thumb img.thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.thumb img.thumb-img.loaded {
+  opacity: 1;
+}
+
+/* 时间轴右端滚动提示（纯装饰，不拦截点击） */
+.timeline-hint {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 22px 0 48px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(12, 12, 15, 0), rgba(12, 12, 15, 0.85) 60%);
+}
+
+/* 年份分隔标签：悬浮在每年第一张缩略图左侧 */
+.year-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 100%;
+  width: 44px;
+  padding: 0;
+  border: none;
+  background: linear-gradient(90deg, rgba(12, 12, 15, 0.95), rgba(12, 12, 15, 0));
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: left;
+  padding-left: 6px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.year-tag:hover {
+  color: var(--accent);
+}
+
+.year-tag:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* 缩略图上的日期角标（图片加载失败时也保持可读） */
+.thumb .thumb-date {
+  position: absolute;
+  left: 6px;
+  bottom: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.03em;
+}
+
+.thumb.current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 4px 18px rgba(0, 0, 0, 0.5);
+}
+
+.thumb:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ==================== 首次访问操作提示 ==================== */
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--timeline-h) + 26px);
+  transform: translateX(-50%) translateY(8px);
+  z-index: 30;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(12, 12, 15, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 720px) {
+  .toast {
+    font-size: 12px;
+    padding: 8px 16px;
+    white-space: normal;
+    width: max-content;
+    max-width: calc(100vw - 40px);
+    text-align: center;
+  }
+}
+
+/* ==================== 响应式与动效偏好 ==================== */
+
+@media (max-width: 720px) {
+  :root {
+    --thumb-w: 112px;
+    --thumb-h: 63px;
+    --timeline-h: 96px;
+  }
+
+  .topbar {
+    padding: calc(10px + env(safe-area-inset-top)) 16px 14px;
+  }
+
+  .topbar-meta {
+    font-size: 12px;
+    gap: 10px;
+  }
+
+  .caption {
+    padding: 48px 20px calc(20px + env(safe-area-inset-bottom));
+  }
+
+  .slide-title {
+    font-size: 20px;
+  }
+
+  .timeline {
+    padding: 12px 14px 0;
+  }
+
+  .timeline-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 关闭所有动画与过渡，尊重系统动效偏好 */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
