@@ -192,7 +192,8 @@ function fillSlide(layer: HTMLElement, detail: Detail): void {
   // 远程图失败 -> 占位样式（alt 文字仍可读）
   img.onerror = () => img.classList.add("img-error");
   img.classList.remove("img-error");
-  img.alt = detail.title;
+  // 主图为装饰性背景，标题由 caption 的 h2 朗读（避免读屏重复）
+  img.alt = "";
   img.src = detail.remoteUrl;
   titleEl.textContent = detail.title;
   const actions = document.createElement("div");
@@ -420,9 +421,9 @@ function mountThumb(i: number): void {
   btn.style.height = `${THUMB_H}px`;
   btn.style.transform = `translateX(${i * STRIDE}px)`;
   btn.dataset.index = String(i);
-  btn.setAttribute("role", "option");
-  btn.setAttribute("aria-selected", String(i === renderedIndex));
+  btn.setAttribute("aria-current", "false");
   btn.setAttribute("aria-label", `${entry.label} 的壁纸`);
+  btn.tabIndex = i === rovingIndex ? 0 : -1; // roving：仅活动项可 Tab 聚焦
   const dateEl = document.createElement("span");
   dateEl.className = "thumb-date";
   dateEl.textContent = `${entry.date.slice(4, 6)}-${entry.date.slice(6)}`;
@@ -480,12 +481,35 @@ function ensureThumbLoaded(i: number): void {
     .catch(() => thumbSettled.add(i));
 }
 
+/** roving tabindex 的活动项下标（时间轴内唯一可 Tab 聚焦的缩略图） */
+let rovingIndex = -1;
+
+/** 更新 roving 焦点：仅活动项 tabindex=0，其余 -1（Tab 只进当前项，方向键在项间移动） */
+function setRovingTab(i: number): void {
+  rovingIndex = i;
+  for (const [idx, btn] of thumbCache) btn.tabIndex = idx === i ? 0 : -1;
+}
+
+/** 键盘移动焦点到指定缩略图；未挂载（窗口化）时先滚动到目标再聚焦 */
+function focusThumb(i: number): void {
+  if (i < 0 || i >= entries.length) return;
+  if (!thumbCache.has(i)) {
+    timeline.scrollLeft = Math.max(0, i * STRIDE - (timeline.clientWidth - THUMB_W) / 2);
+    renderWindow();
+  }
+  const btn = thumbCache.get(i);
+  if (!btn) return;
+  setRovingTab(i);
+  btn.focus();
+}
+
 /** 主图切换后：高亮当前项并平滑滚动居中 */
 function syncTimeline(index: number, smooth = true): void {
   for (const [i, btn] of thumbCache) {
     btn.classList.toggle("current", i === index);
-    btn.setAttribute("aria-selected", String(i === index));
+    btn.setAttribute("aria-current", String(i === index));
   }
+  setRovingTab(index);
   const targetLeft = index * STRIDE - (timeline.clientWidth - THUMB_W) / 2;
   timeline.scrollTo({
     left: Math.max(0, targetLeft),
@@ -604,6 +628,26 @@ stage.addEventListener(
 
 // 键盘导航
 document.addEventListener("keydown", (e) => {
+  // 焦点在时间轴内：方向键在缩略图间移动焦点（roving），Home/End 跳首/末
+  const activeEl = document.activeElement;
+  if (activeEl instanceof HTMLElement && timeline.contains(activeEl) && activeEl.dataset.index !== undefined) {
+    const cur = Number(activeEl.dataset.index);
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      e.preventDefault();
+      focusThumb(cur + (e.key === "ArrowRight" ? 1 : -1));
+      return;
+    }
+    if (e.key === "Home") {
+      e.preventDefault();
+      focusThumb(0);
+      return;
+    }
+    if (e.key === "End") {
+      e.preventDefault();
+      focusThumb(entries.length - 1);
+      return;
+    }
+  }
   const dir =
     e.key === "ArrowLeft" || e.key === "ArrowUp" || e.key === "PageUp"
       ? -1
