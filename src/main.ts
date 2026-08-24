@@ -399,15 +399,12 @@ let hi = -1;
 function layoutThumbs(): void {
   timelineInner.style.width = `${entries.length * STRIDE - THUMB_GAP}px`;
   timelineInner.style.height = `${THUMB_H}px`;
-  // 年份标签：绝对定位在该年第一张之前，点击跳转该年
+  // 年份标签：绝对定位在该年第一张之前；纯装饰（pointer-events: none），不遮挡缩略图点击
   for (const ys of yearStarts) {
-    const tag = document.createElement("button");
-    tag.type = "button";
+    const tag = document.createElement("div");
     tag.className = "year-tag";
     tag.textContent = ys.year;
     tag.style.transform = `translateX(${Math.max(0, ys.index * STRIDE - 44)}px)`;
-    tag.setAttribute("aria-label", `跳到 ${ys.year} 年`);
-    tag.addEventListener("click", () => void goTo(ys.index, { push: true }));
     timelineInner.appendChild(tag);
   }
 }
@@ -537,13 +534,21 @@ let dragActive = false;
 let dragMoved = false;
 let dragStartX = 0;
 let dragStartScroll = 0;
+// NOTE: 不用 setPointerCapture——它会把 pointerup/click 的目标重定向到 timeline，
+// 事件委托 closest(".thumb") 将失效导致点击不跳转。改在 document 上监听 up 结束拖拽
 timeline.addEventListener("pointerdown", (e) => {
   if (e.pointerType !== "mouse" || e.button !== 0) return; // 仅鼠标左键，触摸走原生滚动
   dragActive = true;
   dragMoved = false;
   dragStartX = e.clientX;
   dragStartScroll = timeline.scrollLeft;
-  timeline.setPointerCapture(e.pointerId);
+  const onUp = (ev: PointerEvent) => {
+    document.removeEventListener("pointerup", onUp);
+    document.removeEventListener("pointercancel", onUp);
+    endDrag(ev.type === "pointercancel");
+  };
+  document.addEventListener("pointerup", onUp);
+  document.addEventListener("pointercancel", onUp);
 });
 timeline.addEventListener("pointermove", (e) => {
   if (!dragActive) return;
@@ -551,17 +556,21 @@ timeline.addEventListener("pointermove", (e) => {
   if (Math.abs(dx) > 6) dragMoved = true;
   timeline.scrollLeft = dragStartScroll - dx;
 });
-const endDrag = () => {
+// 拖拽结束仅释放状态；dragMoved 交由 click 处理时"吞掉并复位"
+// （pointerup 之后 click 先于定时器执行，定时清除会误拦正常点击）
+const endDrag = (canceled: boolean) => {
   dragActive = false;
-  // 拖拽结束延迟清标志，确保本次 click 被忽略
-  window.setTimeout(() => (dragMoved = false), 0);
+  if (canceled) dragMoved = false; // 取消不会派发 click，立即复位
 };
-timeline.addEventListener("pointerup", endDrag);
-timeline.addEventListener("pointercancel", endDrag);
+timeline.addEventListener("pointerup", () => endDrag(false));
+timeline.addEventListener("pointercancel", () => endDrag(true));
 
 // 点击缩略图跳转（事件委托，避免 1000+ 监听器）
 timelineInner.addEventListener("click", (e) => {
-  if (dragMoved) return; // 拖拽结束后的 click 忽略
+  if (dragMoved) {
+    dragMoved = false; // 拖拽产生的 click：吞掉并复位，避免吞掉下一次正常点击
+    return;
+  }
   const btn = (e.target as HTMLElement).closest<HTMLElement>(".thumb");
   if (!btn?.dataset.index) return;
   const i = Number(btn.dataset.index);
