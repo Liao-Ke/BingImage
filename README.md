@@ -14,7 +14,6 @@ BingImage 是一个自动化的必应每日壁纸档案项目：
 - **每日自动抓取**：GitHub Actions 定时（UTC 00:00）运行 Python 脚本，从必应官方接口抓取当日 UHD 壁纸与元数据（标题、版权、测验链接等），自动提交入库
 - **完整历史档案**：自 2023-11-19 起每日一档，现已积累 **1000+ 天**的壁纸存档，按日期归档在 `image/YYYYMMDD/`
 - **沉浸式档案主页**：Vite + TypeScript 构建的全屏壁纸浏览器，支持滚轮 / 触摸 / 键盘 / 缩略图时间轴 / URL 直达任意日期
-- **随机壁纸接口**：Cloudflare Workers 提供的 `bigmg.php` 随机图接口，README 顶部展示的"今天的必应美图"即由它输出
 
 在线访问：[必应美图 · 每日壁纸档案](https://bingimage-7hq.pages.dev/)
 
